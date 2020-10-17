@@ -14,17 +14,18 @@ namespace Openhack.Functions
     public static class CreateRating
     {
         [FunctionName("CreateRating")]
-        public static async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)] HttpRequest req, ILogger log) {
-                log.LogInformation("C# HTTP trigger function processed a request.");
-                
-                var requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-                dynamic data = JsonConvert.DeserializeObject(requestBody);
-                
-                var ratingItem = RatingItem.generate(data);
-                var client = Utils.generateCosmosClient();;
-                var container = await Utils.getRatingContainer(client);
-                var createResponse = await container.CreateItemAsync(ratingItem);
-                return new OkObjectResult(createResponse.Resource);
-            }
+        public static async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)] HttpRequest req, ILogger log) 
+        {
+            log.LogInformation("C# HTTP trigger function processed a request.");
+            
+            var requestBody = await new StreamReader(req.Body).ReadToEndAsync();
+            dynamic data = JsonConvert.DeserializeObject(requestBody);
+            
+            var ratingItem = RatingItem.generate(data);
+            var client = Utils.generateCosmosClient();;
+            var container = await Utils.getRatingContainer(client);
+            var createResponse = await container.CreateItemAsync(ratingItem);
+            return new OkObjectResult(createResponse.Resource);
+        }
     }
 }
