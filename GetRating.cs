@@ -17,7 +17,6 @@ namespace Openhack.Functions
         public static async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = null)] HttpRequest req, ILogger log)
         {
             log.LogInformation("C# HTTP trigger function processed a request.");
-
             string ratingId = req.Query["ratingId"];
             log.LogDebug("\ratingId: " + ratingId);
 

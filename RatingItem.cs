@@ -24,11 +24,13 @@ namespace Openhack.Functions
             this.UserNotes = UserNotes;
         }
 
-        public override string ToString() {
+        public override string ToString() 
+        {
             return JsonConvert.SerializeObject(this);
         }
 
-        public static RatingItem generate(dynamic data) {
+        public static RatingItem generate(dynamic data) 
+        {
             string userId = data?.userId;
             string productId = data?.productId;
             string locationName = data?.locationName;

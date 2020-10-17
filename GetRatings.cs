@@ -23,7 +23,7 @@ namespace Openhack.Functions
 
             var sqlQueryText = $"SELECT * FROM Ratings WHERE Ratings.UserId = '{UserId}'";
             var ratings = await Utils.getRatingsByQuery(sqlQueryText, log);
-    
+        
             return new OkObjectResult(ratings);
         }
     }
