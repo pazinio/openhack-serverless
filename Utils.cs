@@ -14,11 +14,8 @@ namespace Openhack.Functions
         }
 
          public static async Task<List<RatingItem>> getRatingsByQuery(String sqlQueryText, ILogger log) {
-            
             var client = generateCosmosClient();
-            var database = await client.CreateDatabaseIfNotExistsAsync("12345678");
-            var container = client.GetContainer("12345678", "Ratings");
-
+            var container = await getRatingContainer(client);
             var queryDefinition = new QueryDefinition(sqlQueryText);
             var queryResultSetIterator = container.GetItemQueryIterator<RatingItem>(queryDefinition);
             var ratings = new List<RatingItem>();
@@ -35,6 +32,11 @@ namespace Openhack.Functions
             }
 
             return ratings;
+        }
+
+         public static async Task<Container> getRatingContainer(CosmosClient client) {
+            var database = await client.CreateDatabaseIfNotExistsAsync("12345678");
+            return client.GetContainer("12345678", "Ratings");
         }
     }
 }
