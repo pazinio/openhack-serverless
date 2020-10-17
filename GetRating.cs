@@ -1,3 +1,4 @@
+using System.Data.Common;
 using System;
 using System.IO;
 using System.Threading.Tasks;
@@ -12,7 +13,7 @@ using System.Collections.Generic;
 namespace Openhack.Functions
 {
     public static class GetRating
-    {
+    {   
         [FunctionName("GetRating")]
         public static async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = null)] HttpRequest req, ILogger log)
         {
@@ -22,7 +23,10 @@ namespace Openhack.Functions
 
             var sqlQueryText = $"SELECT * FROM Ratings WHERE Ratings.id = '{ratingId}'";
             var ratings = await Utils.getRatingsByQuery(sqlQueryText, log);
-            return new OkObjectResult(ratings);
+           
+            if (!Utils.IsAny(ratings)) return new NotFoundObjectResult(new {errorMessage = "No rating found for given rating id!", ratingId});
+            return new OkObjectResult(ratings[0]);
+            
         }
     }
 }

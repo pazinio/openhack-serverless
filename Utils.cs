@@ -3,6 +3,7 @@ using Microsoft.Azure.Cosmos;
 using System.Collections.Generic;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace Openhack.Functions
 {
@@ -41,5 +42,9 @@ namespace Openhack.Functions
             var database = await client.CreateDatabaseIfNotExistsAsync("12345678");
             return client.GetContainer("12345678", "Ratings");
         }
+
+         public static bool IsAny<T>(IEnumerable<T> data) {
+            return data != null && data.Any();
+         }
     }
 }
