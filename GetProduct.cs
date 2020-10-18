@@ -16,10 +16,8 @@ namespace Openhack.Functions
         public static IActionResult Run([HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = null)] HttpRequest req, ILogger log)
         {
             log.LogInformation("C# HTTP trigger function processed a request.");
-
             string productId = req.Query["product_id"];
             string responseMessage =   $"The product name for your product id {productId} is Starfruit Explosion";
-
             return new OkObjectResult(responseMessage);
         }
     }

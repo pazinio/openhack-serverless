@@ -20,10 +20,8 @@ namespace Openhack.Functions
             log.LogInformation("C# HTTP trigger function processed a request.");
             string UserId = req.Query["UserId"];
             log.LogDebug("UserId: " + UserId);
-
             var sqlQueryText = $"SELECT * FROM Ratings WHERE Ratings.UserId = '{UserId}'";
             var ratings = await Utils.getRatingsByQuery(sqlQueryText, log);
-    
             if (!Utils.IsAny(ratings)) return new NotFoundObjectResult(new {errorMessage = "No ratings found for given user id!", UserId});
             return new OkObjectResult(ratings);
         }
