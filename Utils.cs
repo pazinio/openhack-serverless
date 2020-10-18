@@ -7,16 +7,16 @@ using System.Linq;
 
 namespace Openhack.Functions
 {
-    public class Utils {
-        static public CosmosClient generateCosmosClient() 
+    public class Utils
+    {
+        static public CosmosClient generateCosmosClient()
         {
-            var cosmosURI = System.Environment.GetEnvironmentVariable("COSMOS_URI", EnvironmentVariableTarget.Process);                        
+            var cosmosURI = System.Environment.GetEnvironmentVariable("COSMOS_URI", EnvironmentVariableTarget.Process);
             var cosmosKey = System.Environment.GetEnvironmentVariable("COSMOS_KEY", EnvironmentVariableTarget.Process);
             return new CosmosClient(cosmosURI, cosmosKey);
         }
-
-         public static async Task<List<RatingItem>> getRatingsByQuery(String sqlQueryText, ILogger log) 
-         {
+        public static async Task<List<RatingItem>> getRatingsByQuery(String sqlQueryText, ILogger log)
+        {
             var client = generateCosmosClient();
             var container = await getRatingContainer(client);
             var queryDefinition = new QueryDefinition(sqlQueryText);
@@ -36,15 +36,14 @@ namespace Openhack.Functions
 
             return ratings;
         }
-
-         public static async Task<Container> getRatingContainer(CosmosClient client) 
-         {
+        public static async Task<Container> getRatingContainer(CosmosClient client)
+        {
             var database = await client.CreateDatabaseIfNotExistsAsync("12345678");
             return client.GetContainer("12345678", "Ratings");
         }
-
-         public static bool IsAny<T>(IEnumerable<T> data) {
+        public static bool IsAny<T>(IEnumerable<T> data)
+        {
             return data != null && data.Any();
-         }
+        }
     }
 }
